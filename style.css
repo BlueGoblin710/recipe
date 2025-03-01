@@ -324,6 +324,10 @@ nav a:hover {
     border-left: none;
 }
 
+.search-bar svg:hover {
+    cursor: pointer;
+}
+
 /* Recipe Container */
 .recipe-container {
     display: flex;
@@ -358,6 +362,10 @@ nav a:hover {
     align-items: center;
 }
 
+.icon-container:hover{
+    cursor:pointer;
+}
+
 .icon-label {
     margin-top: 5px;
     color: var(--highlight-color);
@@ -369,6 +377,7 @@ nav a:hover {
 
 .icon-label:hover {
     background-color: #fb9f59;
+    cursor: pointer;
 }
 
 /* Show "Jump To Recipe", hide "Jump" */
@@ -581,6 +590,7 @@ aside section .rating dd {
 
 .social-item:hover {
     background-color: #fb9f5954;
+    cursor: pointer;
 }
 
 .social-item svg {
