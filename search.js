@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('keyup', () => {
         const query = searchInput.value.toLowerCase();
-        const elements = document.querySelectorAll('body *');
+        const elements = document.querySelectorAll('body *:not(#search-input):not(svg)');
 
         elements.forEach(element => {
             element.style.backgroundColor = '';
