@@ -7,18 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Remove previous highlights
         document.querySelectorAll('.highlight').forEach(el => {
-            el.outerHTML = el.innerHTML;
+            const parent = el.parentNode;
+            parent.replaceChild(document.createTextNode(el.textContent), el);
+            parent.normalize();
         });
 
         if (query) {
             for (let element of elements) {
                 if (element.textContent.toLowerCase().includes(query)) {
-                    const regex = new RegExp(`(${query})`, 'gi');
-                    element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+                    highlightText(element, query);
                     document.querySelector('.highlight').scrollIntoView({ behavior: 'smooth', block: 'center' });
                     break;
                 }
             }
         }
     });
+
+    function highlightText(element, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    }
 });
