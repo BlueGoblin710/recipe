@@ -7,10 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (query) {
             for (let element of elements) {
-                if (element.childNodes.length === 1 && element.childNodes[0].nodeType === Node.TEXT_NODE) {
-                    if (element.textContent.toLowerCase().includes(query)) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        break;
+                if (element.nodeType === Node.ELEMENT_NODE) {
+                    for (let child of element.childNodes) {
+                        if (child.nodeType === Node.TEXT_NODE && child.textContent.toLowerCase().includes(query)) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            return;
+                        }
                     }
                 }
             }
