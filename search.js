@@ -5,17 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = searchInput.value.toLowerCase();
         const elements = document.querySelectorAll('body *:not(#search-input):not(svg)');
 
-        elements.forEach(element => {
-            element.style.backgroundColor = '';
+        // Remove previous highlights
+        document.querySelectorAll('.highlight').forEach(el => {
+            el.outerHTML = el.innerHTML;
         });
 
         if (query) {
-            elements.forEach(element => {
+            for (let element of elements) {
                 if (element.textContent.toLowerCase().includes(query)) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    element.style.backgroundColor = 'yellow';
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+                    document.querySelector('.highlight').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    break;
                 }
-            });
+            }
         }
     });
 });
