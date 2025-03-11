@@ -3,14 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('keyup', () => {
         const query = searchInput.value.toLowerCase();
-        const content = document.body.innerText.toLowerCase();
+        const elements = document.querySelectorAll('body *');
+
+        elements.forEach(element => {
+            element.style.backgroundColor = '';
+        });
 
         if (query) {
-            if (content.includes(query)) {
-                alert(`Found: ${query}`);
-            } else {
-                alert(`No results found for: ${query}`);
-            }
+            elements.forEach(element => {
+                if (element.textContent.toLowerCase().includes(query)) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    element.style.backgroundColor = 'yellow';
+                }
+            });
         }
     });
 });
