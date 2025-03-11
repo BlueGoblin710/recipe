@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('keyup', () => {
         const query = searchInput.value.toLowerCase();
-        const elements = document.querySelectorAll('body *:not(#search-input):not(svg)');
+        const elements = document.querySelectorAll('body *:not(#search-input):not(svg):not(script):not(style)');
 
         // Remove previous highlights
         document.querySelectorAll('.highlight').forEach(el => {
@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (query) {
             for (let element of elements) {
-                if (element.textContent.toLowerCase().includes(query)) {
-                    highlightText(element, query);
-                    document.querySelector('.highlight').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    break;
+                if (element.childNodes.length === 1 && element.childNodes[0].nodeType === Node.TEXT_NODE) {
+                    if (element.textContent.toLowerCase().includes(query)) {
+                        highlightText(element, query);
+                        document.querySelector('.highlight').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        break;
+                    }
                 }
             }
         }
@@ -25,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function highlightText(element, query) {
         const regex = new RegExp(`(${query})`, 'gi');
-        element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+        const newText = element.textContent.replace(regex, '<span class="highlight">$1</span>');
+        const newElement = document.createElement('span');
+        newElement.innerHTML = newText;
+        element.replaceWith(newElement);
     }
 });
